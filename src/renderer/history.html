@@ -375,11 +375,14 @@
           let domain = '';
           try { domain = new URL(entry.url).hostname; } catch {}
 
+          let safeFav = entry.favicon || 'https://www.google.com/favicon.ico';
+          if (safeFav.startsWith('data:image/svg+xml')) safeFav = safeFav.replace(/"/g, "'");
+
           html += `
             <div class="history-row" data-id="${entry.id}">
               <input type="checkbox" class="entry-checkbox" data-id="${entry.id}">
               <span class="row-time">${timeStr}</span>
-              <img class="row-favicon" src="${entry.favicon || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%238ab4f8%22/></svg>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%238ab4f8%22/></svg>'">
+              <img class="row-favicon" src="${safeFav}">
               <a class="row-title" href="#" data-url="${entry.url}">${escapeHtml(entry.title)}</a>
               <span class="row-domain">${domain}</span>
               <button class="row-delete-btn" data-id="${entry.id}" title="Remove from history">✕</button>

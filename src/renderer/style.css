@@ -1,6 +1,6 @@
 /* ==========================================================
-   FASTBROWSER - EXACT GOOGLE CHROME MATERIAL DESIGN 3 THEME
-   Zero-Bloat, High-Performance, Ultra-Fluid CSS
+   FASTBROWSER - EXACT GOOGLE CHROME MOBILE & DESKTOP THEME
+   Responsive, Fluid, Material Design 3 for Phones & Desktops
    ========================================================== */
 
 :root {
@@ -75,7 +75,9 @@ body {
   color: var(--tab-text);
   overflow: hidden;
   height: 100vh;
+  width: 100vw;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .chrome-window {
@@ -84,10 +86,11 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: var(--tabbar-bg);
+  position: relative;
 }
 
 /* ==========================================================
-   1. CHROME TABS STRIP
+   1. CHROME TOP TAB BAR (Desktop)
    ========================================================== */
 .chrome-titlebar {
   display: flex;
@@ -110,11 +113,8 @@ body {
   scrollbar-width: none;
   gap: 2px;
 }
-.tabs-container::-webkit-scrollbar {
-  display: none;
-}
+.tabs-container::-webkit-scrollbar { display: none; }
 
-/* Chrome Tab Element */
 .chrome-tab {
   display: flex;
   align-items: center;
@@ -145,7 +145,6 @@ body {
   font-weight: 500;
 }
 
-/* Tab Favicon */
 .tab-favicon {
   width: 16px;
   height: 16px;
@@ -163,16 +162,10 @@ body {
   animation: spin 0.8s linear infinite;
   display: none;
 }
-.chrome-tab.loading .tab-spinner {
-  display: inline-block;
-}
-.chrome-tab.loading .tab-favicon {
-  display: none;
-}
+.chrome-tab.loading .tab-spinner { display: inline-block; }
+.chrome-tab.loading .tab-favicon { display: none; }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .tab-title {
   flex: 1;
@@ -195,14 +188,12 @@ body {
   opacity: 0.7;
   font-size: 11px;
   flex-shrink: 0;
-  transition: all 0.15s ease;
 }
 .tab-close-btn:hover {
   background-color: rgba(255, 255, 255, 0.15);
   opacity: 1;
 }
 
-/* New Tab Button */
 .new-tab-btn {
   width: 30px;
   height: 30px;
@@ -215,13 +206,9 @@ body {
   justify-content: center;
   cursor: pointer;
   margin-bottom: 2px;
-  transition: background-color 0.15s ease;
 }
-.new-tab-btn:hover {
-  background-color: var(--icon-hover-bg);
-}
+.new-tab-btn:hover { background-color: var(--icon-hover-bg); }
 
-/* Window Control Buttons */
 .window-controls {
   display: flex;
   align-items: center;
@@ -239,15 +226,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.15s;
 }
-.win-btn:hover {
-  background-color: var(--icon-hover-bg);
-}
-.win-close:hover {
-  background-color: #e81123 !important;
-  color: #ffffff;
-}
+.win-btn:hover { background-color: var(--icon-hover-bg); }
+.win-close:hover { background-color: #e81123 !important; color: #ffffff; }
 
 /* ==========================================================
    2. CHROME NAVIGATION & OMNIBOX TOOLBAR
@@ -255,9 +236,9 @@ body {
 .chrome-toolbar {
   display: flex;
   align-items: center;
-  height: 48px;
+  height: 52px;
   background-color: var(--toolbar-bg);
-  padding: 0 10px;
+  padding: 0 8px;
   gap: 8px;
   border-bottom: 1px solid var(--border-subtle);
   position: relative;
@@ -271,8 +252,8 @@ body {
 }
 
 .nav-btn, .ext-btn {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: none;
   background: transparent;
@@ -282,14 +263,12 @@ body {
   justify-content: center;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease;
 }
 
-.nav-btn:hover:not(:disabled),
-.ext-btn:hover {
+.nav-btn:hover:not(:disabled), .ext-btn:hover {
   background-color: var(--icon-hover-bg);
 }
-
 .nav-btn:disabled {
   color: var(--icon-disabled);
   cursor: default;
@@ -300,9 +279,9 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
-  height: 34px;
+  height: 38px;
   background-color: var(--omnibox-bg);
-  border-radius: 17px;
+  border-radius: 20px;
   padding: 0 12px;
   gap: 8px;
   position: relative;
@@ -328,12 +307,11 @@ body {
   border: none;
   outline: none;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--omnibox-text);
+  min-width: 0;
 }
-.omnibox-input::placeholder {
-  color: var(--omnibox-placeholder);
-}
+.omnibox-input::placeholder { color: var(--omnibox-placeholder); }
 
 .omnibox-actions {
   display: flex;
@@ -351,10 +329,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
-}
-.omnibox-btn:hover {
-  background-color: var(--icon-hover-bg);
 }
 
 .turbo-badge {
@@ -364,57 +338,38 @@ body {
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 12px;
-  letter-spacing: 0.3px;
-  box-shadow: 0 1px 4px rgba(239, 68, 68, 0.3);
 }
 
-.star-icon.bookmarked {
-  fill: var(--primary-accent);
-  stroke: var(--primary-accent);
-}
-
-/* Omnibox Autocomplete Dropdown */
-.omnibox-suggestions {
-  position: absolute;
-  top: 38px;
-  left: 0;
-  right: 0;
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: var(--shadow-popup);
-  border: 1px solid var(--border-subtle);
-  overflow: hidden;
-  display: none;
-  z-index: 100;
-}
-.omnibox-suggestions.show {
-  display: block;
-}
-.suggestion-item {
+/* SIGNATURE CHROME ANDROID TAB SWITCHER COUNTER BOX */
+.mobile-tab-switcher-btn {
   display: flex;
   align-items: center;
-  padding: 9px 14px;
-  gap: 12px;
-  font-size: 13px;
-  color: var(--tab-text);
-  cursor: pointer;
-  transition: background-color 0.1s ease;
-}
-.suggestion-item:hover {
-  background-color: var(--icon-hover-bg);
+  justify-content: center;
 }
 
-/* EXTENSION BAR */
+.mobile-tab-counter-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--icon-color);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .extension-bar {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .badge-count {
   position: absolute;
-  top: 1px;
-  right: -2px;
+  top: 2px;
+  right: 0px;
   background-color: var(--primary-btn);
   color: #fff;
   font-size: 9px;
@@ -423,29 +378,8 @@ body {
   border-radius: 8px;
 }
 
-.highlight-btn {
-  color: #f59e0b;
-}
-.delete-btn {
-  color: var(--danger-color);
-}
-.delete-btn:hover {
-  background-color: rgba(242, 139, 130, 0.15);
-}
-
-.user-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #1a73e8, #8ab4f8);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-}
+.highlight-btn { color: #f59e0b; }
+.delete-btn { color: var(--danger-color); }
 
 /* ==========================================================
    3. CHROME BOOKMARKS BAR
@@ -453,15 +387,14 @@ body {
 .chrome-bookmarks-bar {
   display: flex;
   align-items: center;
-  height: 28px;
+  height: 30px;
   background-color: var(--bookmark-bar-bg);
   padding: 0 10px;
   gap: 6px;
   border-bottom: 1px solid var(--border-subtle);
   overflow-x: auto;
-  font-size: 11px;
+  font-size: 12px;
 }
-
 .bookmark-item {
   display: flex;
   align-items: center;
@@ -471,23 +404,11 @@ body {
   cursor: pointer;
   gap: 5px;
   white-space: nowrap;
-  transition: background-color 0.15s ease;
 }
-.bookmark-item:hover {
-  background-color: var(--icon-hover-bg);
-}
-.bm-favicon {
-  width: 14px;
-  height: 14px;
-  object-fit: contain;
-}
-.bm-icon {
-  font-size: 12px;
-}
-.action-bm {
-  color: var(--primary-accent);
-  font-weight: 500;
-}
+.bookmark-item:hover { background-color: var(--icon-hover-bg); }
+.bm-favicon { width: 14px; height: 14px; object-fit: contain; }
+.bm-icon { font-size: 12px; }
+.action-bm { color: var(--primary-accent); font-weight: 500; }
 
 /* ==========================================================
    4. CONTENT AREA & VIEWS
@@ -502,7 +423,7 @@ body {
 }
 
 .page-loading-bar {
-  height: 2px;
+  height: 3px;
   width: 0%;
   background: linear-gradient(90deg, #1a73e8, #38bdf8);
   position: absolute;
@@ -528,168 +449,186 @@ body {
   left: 0;
   display: none;
 }
-.tab-view-frame.active {
-  display: block;
+.tab-view-frame.active { display: block; }
+
+/* ==========================================================
+   5. MOBILE TAB SWITCHER SCREEN (Chrome Android Style)
+   ========================================================== */
+.mobile-tab-switcher-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--chrome-bg);
+  z-index: 150;
+  display: none;
+  flex-direction: column;
+}
+.mobile-tab-switcher-view.show { display: flex; }
+
+.tab-switcher-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: var(--toolbar-bg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.switcher-action-btn {
+  background: transparent;
+  border: none;
+  color: var(--icon-color);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switcher-mode-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mode-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--tab-inactive-text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mode-tab.active {
+  background: rgba(138, 180, 248, 0.15);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+.tab-cards-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+  align-content: start;
+}
+
+.mobile-tab-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.mobile-tab-card.active-tab {
+  border: 2px solid var(--primary-accent);
+  box-shadow: 0 0 12px rgba(138, 180, 248, 0.3);
+}
+
+.card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 6px;
+}
+.card-favicon { width: 14px; height: 14px; object-fit: contain; }
+.card-title {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  color: var(--tab-text);
+}
+.card-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--tab-inactive-text);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px;
+}
+.card-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #18191c;
+  color: var(--tab-inactive-text);
+  font-size: 11px;
+  padding: 10px;
+  text-align: center;
 }
 
 /* ==========================================================
-   5. POPUPS & CHROME MENUS
+   6. MOBILE & DESKTOP CHROME MENU
    ========================================================== */
-.chrome-popup {
-  position: absolute;
-  top: 92px;
-  right: 60px;
-  width: 320px;
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: var(--shadow-popup);
-  border: 1px solid var(--border-subtle);
-  padding: 16px;
-  z-index: 200;
-  display: none;
-  animation: fadeIn 0.15s ease-out;
-}
-.chrome-popup.show {
-  display: block;
-}
-
-#popup-lmarena {
-  right: 110px;
-  width: 340px;
-}
-
-.popup-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-subtle);
-}
-.popup-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.status-pill {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 10px;
-  text-transform: uppercase;
-}
-.status-pill.active {
-  background-color: rgba(129, 201, 149, 0.2);
-  color: var(--success-color);
-  border: 1px solid var(--success-color);
-}
-
-.shield-stat-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 12px;
-}
-.stat-value.highlight {
-  color: #38bdf8;
-  font-weight: bold;
-  font-size: 14px;
-}
-.stat-value.speed {
-  color: #f59e0b;
-  font-weight: bold;
-}
-.stat-value.safe {
-  color: var(--success-color);
-  font-weight: bold;
-}
-.popup-note {
-  font-size: 11px;
-  color: var(--tab-inactive-text);
-  margin-top: 10px;
-  line-height: 1.4;
-}
-
-.feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 12px;
-  font-size: 12px;
-}
-.feature-item strong {
-  display: block;
-  color: var(--tab-text);
-}
-.feature-item small {
-  display: block;
-  color: var(--tab-inactive-text);
-  margin-top: 2px;
-}
-
-/* Chrome 3-Dots Menu */
 .chrome-menu {
   position: absolute;
-  top: 92px;
-  right: 12px;
+  top: 56px;
+  right: 8px;
   width: 250px;
   background-color: var(--card-bg);
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: var(--shadow-popup);
   border: 1px solid var(--border-subtle);
   padding: 6px 0;
   z-index: 200;
   display: none;
 }
-.chrome-menu.show {
-  display: block;
+.chrome-menu.show { display: block; }
+
+.mobile-menu-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px 8px;
 }
-.menu-item, .menu-row {
+.menu-action-icon {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: var(--tab-text);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+}
+.menu-action-icon:hover { background: var(--icon-hover-bg); }
+
+.menu-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  font-size: 13px;
-  color: var(--tab-text);
-  cursor: pointer;
-  transition: background-color 0.1s ease;
-}
-.menu-item:hover {
-  background-color: var(--icon-hover-bg);
-}
-.menu-item .shortcut {
-  font-size: 11px;
-  color: var(--tab-inactive-text);
-}
-.menu-divider {
-  height: 1px;
-  background-color: var(--border-subtle);
-  margin: 4px 0;
-}
-.text-danger {
-  color: var(--danger-color) !important;
-}
-
-.zoom-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.zoom-btn {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  background: var(--omnibox-bg);
-  border: 1px solid var(--border-subtle);
+  padding: 10px 18px;
+  font-size: 14px;
   color: var(--tab-text);
   cursor: pointer;
 }
+.menu-item:hover { background-color: var(--icon-hover-bg); }
+.menu-item .shortcut { font-size: 11px; color: var(--tab-inactive-text); }
+.menu-divider { height: 1px; background-color: var(--border-subtle); margin: 4px 0; }
+.text-danger { color: var(--danger-color) !important; }
 
 /* ==========================================================
-   6. MODAL DIALOGS (Clear Browsing Data, Bookmark)
+   7. MODALS & POPUPS
    ========================================================== */
 .modal-backdrop {
   position: fixed;
@@ -697,34 +636,24 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.7);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 300;
 }
-.modal-backdrop.show {
-  display: flex;
-}
+.modal-backdrop.show { display: flex; }
 
 .chrome-modal {
   background-color: var(--modal-bg);
-  width: 500px;
-  border-radius: 12px;
+  width: 90%;
+  max-width: 480px;
+  border-radius: 14px;
   box-shadow: var(--shadow-popup);
   border: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: modalScale 0.18s ease-out;
-}
-.small-modal {
-  width: 380px;
-}
-
-@keyframes modalScale {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
 }
 
 .modal-header {
@@ -734,21 +663,13 @@ body {
   padding: 16px 20px;
   border-bottom: 1px solid var(--border-subtle);
 }
-.modal-header h2 {
-  font-size: 16px;
-  font-weight: 500;
-}
+.modal-header h2 { font-size: 16px; font-weight: 500; }
 .modal-close-btn {
   background: transparent;
   border: none;
   color: var(--icon-color);
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-.modal-close-btn:hover {
-  background-color: var(--icon-hover-bg);
 }
 
 .modal-tabs {
@@ -768,7 +689,6 @@ body {
 .modal-tab.active {
   color: var(--primary-accent);
   border-bottom-color: var(--primary-accent);
-  font-weight: 500;
 }
 
 .modal-body {
@@ -783,22 +703,15 @@ body {
   flex-direction: column;
   gap: 6px;
 }
-.form-group label {
-  font-size: 12px;
-  color: var(--tab-inactive-text);
-}
-.chrome-select, .chrome-input {
+.form-group label { font-size: 12px; color: var(--tab-inactive-text); }
+.chrome-select {
   background-color: var(--omnibox-bg);
   border: 1px solid var(--omnibox-border);
   color: var(--tab-text);
   padding: 8px 12px;
   border-radius: 6px;
   outline: none;
-  font-family: inherit;
   font-size: 13px;
-}
-.chrome-select:focus, .chrome-input:focus {
-  border-color: var(--primary-accent);
 }
 
 .checkbox-group {
@@ -813,9 +726,7 @@ body {
   gap: 12px;
   cursor: pointer;
 }
-.custom-checkbox input {
-  display: none;
-}
+.custom-checkbox input { display: none; }
 .checkbox-box {
   width: 18px;
   height: 18px;
@@ -824,7 +735,6 @@ body {
   margin-top: 2px;
   position: relative;
   flex-shrink: 0;
-  transition: all 0.15s ease;
 }
 .custom-checkbox input:checked + .checkbox-box {
   background-color: var(--primary-btn);
@@ -838,20 +748,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 11px;
-  font-weight: bold;
 }
-.checkbox-text strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-}
-.checkbox-text small {
-  display: block;
-  color: var(--tab-inactive-text);
-  font-size: 11px;
-  margin-top: 2px;
-  line-height: 1.3;
-}
+.checkbox-text strong { display: block; font-size: 13px; }
+.checkbox-text small { display: block; color: var(--tab-inactive-text); font-size: 11px; margin-top: 2px; }
 
 .modal-footer {
   display: flex;
@@ -865,69 +764,72 @@ body {
 .btn {
   padding: 8px 18px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   border: none;
-  transition: all 0.15s ease;
 }
-.btn-secondary {
-  background: transparent;
-  color: var(--primary-accent);
+.btn-secondary { background: transparent; color: var(--primary-accent); }
+.btn-primary { background-color: var(--primary-btn); color: #ffffff; }
+.btn-danger { background-color: #d93025 !important; }
+
+/* POPUP */
+.chrome-popup {
+  position: absolute;
+  top: 60px;
+  right: 12px;
+  width: 90%;
+  max-width: 320px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-popup);
+  border: 1px solid var(--border-subtle);
+  padding: 16px;
+  z-index: 200;
+  display: none;
 }
-.btn-secondary:hover {
-  background-color: var(--icon-hover-bg);
-}
-.btn-primary {
-  background-color: var(--primary-btn);
-  color: #ffffff;
-}
-.btn-primary:hover {
-  filter: brightness(1.1);
-}
-.btn-danger {
-  background-color: #d93025 !important;
-}
+.chrome-popup.show { display: block; }
+.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+.popup-title { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+.shield-stat-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; }
+.stat-value.highlight { color: #38bdf8; font-weight: bold; }
+.stat-value.speed { color: #f59e0b; font-weight: bold; }
+.stat-value.safe { color: var(--success-color); font-weight: bold; }
+.popup-note { font-size: 11px; color: var(--tab-inactive-text); margin-top: 10px; line-height: 1.4; }
+
+.toggle-switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #5f6368; transition: 0.3s; border-radius: 20px; }
+.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: 0.3s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-accent); }
+input:checked + .slider:before { transform: translateX(16px); }
 
 /* ==========================================================
-   7. TOGGLE SWITCH
+   8. RESPONSIVE MEDIA QUERIES (Mobile vs Desktop)
    ========================================================== */
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 36px;
-  height: 20px;
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .mobile-only { display: flex !important; }
+  
+  .chrome-toolbar {
+    height: 54px;
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .omnibox-wrapper {
+    height: 38px;
+    border-radius: 20px;
+    padding: 0 10px;
+  }
+  .omnibox-input {
+    font-size: 14px;
+  }
+  .chrome-menu {
+    width: 240px;
+  }
 }
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #5f6368;
-  transition: 0.3s;
-  border-radius: 20px;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.3s;
-  border-radius: 50%;
-}
-input:checked + .slider {
-  background-color: var(--primary-accent);
-}
-input:checked + .slider:before {
-  transform: translateX(16px);
+
+@media (min-width: 769px) {
+  .mobile-only { display: none !important; }
+  .mobile-tab-switcher-view { display: none !important; }
 }

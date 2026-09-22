@@ -1,0 +1,5 @@
+<resources>
+    <color name="chrome_bg">#202124</color>
+    <color name="chrome_toolbar">#323639</color>
+    <color name="chrome_blue">#8AB4F8</color>
+</resources>

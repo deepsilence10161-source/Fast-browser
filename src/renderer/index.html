@@ -2,22 +2,24 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FastBrowser - Exact Chrome UI & Turbo Anti-Lag Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FastBrowser - Chrome for Mobile & Desktop</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231a73e8'/><path d='M50 18 A32 32 0 0 1 82 50 L50 50 Z' fill='%23ea4335'/><path d='M82 50 A32 32 0 0 1 34 77.7 L50 50 Z' fill='%23fbbc05'/><path d='M34 77.7 A32 32 0 0 1 18 50 L50 50 Z' fill='%2334a853'/><circle cx='50' cy='50' r='18' fill='%23ffffff'/><circle cx='50' cy='50' r='14' fill='%231a73e8'/></svg>">
 </head>
 <body>
-  <div class="chrome-window">
+  <div class="chrome-window" id="chrome-app">
     
-    <!-- 1. CHROME TOP TAB BAR -->
-    <header class="chrome-titlebar">
+    <!-- ==========================================
+         1. DESKTOP TAB BAR (Auto-hidden on Mobile)
+         ========================================== -->
+    <header class="chrome-titlebar desktop-only">
       <div class="tabs-container" id="tabs-container">
-        <!-- Dynamic tabs injected by app.js -->
+        <!-- Desktop tabs injected by app.js -->
       </div>
       
       <button class="new-tab-btn" id="new-tab-btn" title="New Tab (Ctrl+T)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       </button>
 
       <div class="window-controls">
@@ -27,89 +29,85 @@
       </div>
     </header>
 
-    <!-- 2. CHROME NAVIGATION & OMNIBOX TOOLBAR -->
+    <!-- ==========================================
+         2. CHROME NAVIGATION & OMNIBOX TOOLBAR
+            (Adapts cleanly to Mobile Chrome Android)
+         ========================================== -->
     <nav class="chrome-toolbar">
-      <div class="nav-buttons">
-        <button class="nav-btn" id="btn-back" title="Click to go back" disabled>
+      <!-- Desktop-only Nav buttons -->
+      <div class="nav-buttons desktop-only">
+        <button class="nav-btn" id="btn-back" title="Back" disabled>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
-        <button class="nav-btn" id="btn-forward" title="Click to go forward" disabled>
+        <button class="nav-btn" id="btn-forward" title="Forward" disabled>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
-        <button class="nav-btn" id="btn-reload" title="Reload this page">
+        <button class="nav-btn" id="btn-reload" title="Reload">
           <svg class="reload-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
         </button>
-        <button class="nav-btn" id="btn-home" title="Open the home page">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </button>
       </div>
+
+      <!-- Home button (Visible on both Mobile & Desktop) -->
+      <button class="nav-btn" id="btn-home" title="Home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </button>
 
       <!-- OMNIBOX (Address Bar) -->
       <div class="omnibox-wrapper" id="omnibox-wrapper">
         <div class="omnibox-icon" id="security-icon" title="Connection is secure">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
         
-        <input type="text" class="omnibox-input" id="omnibox-input" placeholder="Search Google or enter URL" spellcheck="false" autocomplete="off">
+        <input type="text" class="omnibox-input" id="omnibox-input" placeholder="Search or type URL" spellcheck="false" autocomplete="off">
         
         <div class="omnibox-actions">
-          <button class="omnibox-btn" id="btn-turbo-badge" title="Turbo Speed Acceleration Engine Active">
+          <button class="omnibox-btn desktop-only" id="btn-turbo-badge" title="100x Turbo Speed Active">
             <span class="turbo-badge">⚡ 100x Turbo</span>
           </button>
-          <button class="omnibox-btn" id="btn-star" title="Bookmark this tab">
+          <button class="omnibox-btn desktop-only" id="btn-star" title="Bookmark this tab">
             <svg class="star-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </button>
-          <button class="omnibox-btn" id="btn-copy-url" title="Copy page URL">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <button class="omnibox-btn" id="btn-copy-url" title="Copy URL">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
         </div>
-
-        <!-- Omnibox Search Suggestions Dropdown -->
-        <div class="omnibox-suggestions" id="omnibox-suggestions"></div>
       </div>
 
-      <!-- ACTION & EXTENSION ICONS -->
+      <!-- Action & Extension Icons -->
       <div class="extension-bar">
-        <!-- 1. AdBlock Shield -->
-        <button class="ext-btn" id="btn-adblock" title="FastBrowser Privacy & AdBlock Shield">
+        <!-- Desktop Quick Actions -->
+        <button class="ext-btn desktop-only" id="btn-adblock" title="Turbo AdBlock Shield">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span class="badge-count" id="blocked-count-badge">0</span>
         </button>
 
-        <!-- 2. LMArena Anti-Lag Engine -->
-        <button class="ext-btn highlight-btn" id="btn-lmarena-engine" title="LMArena Anti-Lag Optimizer Shield">
+        <button class="ext-btn highlight-btn desktop-only" id="btn-lmarena-engine" title="LMArena Anti-Lag Shield">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </button>
 
-        <!-- 3. History Quick Access -->
-        <button class="ext-btn" id="btn-quick-history" title="History (Ctrl+H)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </button>
-
-        <!-- 4. Clear Browsing Data Button (User Requested Feature) -->
-        <button class="ext-btn delete-btn" id="btn-clear-data" title="Delete History & Clear Browsing Data (Ctrl+Shift+Del)">
+        <!-- Direct Delete History Button (Requested by User) -->
+        <button class="ext-btn delete-btn desktop-only" id="btn-clear-data" title="Delete Browsing Data">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
         </button>
 
-        <!-- 5. Dark / Light Theme Toggle -->
-        <button class="ext-btn" id="btn-theme-toggle" title="Toggle Dark/Light Mode">
-          <span id="theme-icon">🌙</span>
+        <!-- MOBILE TAB SWITCHER BUTTON (Signature Chrome Android Square Badge) -->
+        <button class="ext-btn mobile-tab-switcher-btn" id="btn-mobile-tabs" title="Switch Tabs">
+          <div class="mobile-tab-counter-box">
+            <span id="mobile-tab-count">1</span>
+          </div>
         </button>
 
-        <!-- 6. Profile Avatar -->
-        <div class="user-avatar" title="Signed in as DeepSilence (Local Zero-Trace Profile)">
-          <span>D</span>
-        </div>
-
-        <!-- 7. Chrome 3-Dots Menu -->
-        <button class="ext-btn" id="btn-chrome-menu" title="Customize and control FastBrowser">
+        <!-- Chrome 3-Dots Menu -->
+        <button class="ext-btn" id="btn-chrome-menu" title="Chrome Menu">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
         </button>
       </div>
     </nav>
 
-    <!-- 3. CHROME BOOKMARKS BAR -->
-    <div class="chrome-bookmarks-bar" id="bookmarks-bar">
+    <!-- ==========================================
+         3. CHROME BOOKMARKS BAR (Desktop only)
+         ========================================== -->
+    <div class="chrome-bookmarks-bar desktop-only" id="bookmarks-bar">
       <div class="bookmark-item" data-url="newtab">
         <span class="bm-icon">🏠</span>
         <span class="bm-title">New Tab</span>
@@ -144,7 +142,9 @@
       </div>
     </div>
 
-    <!-- 4. WEB CONTENT AREA WITH LOADING PROGRESS BAR -->
+    <!-- ==========================================
+         4. WEB CONTENT AREA
+         ========================================== -->
     <div class="chrome-content-area">
       <div class="page-loading-bar" id="loading-bar"></div>
       <div class="tab-views-container" id="tab-views-container">
@@ -152,9 +152,156 @@
       </div>
     </div>
 
+    <!-- ==========================================
+         5. MOBILE TAB SWITCHER SCREEN
+            (Full screen cards like Chrome on Android)
+         ========================================== -->
+    <div class="mobile-tab-switcher-view" id="mobile-tab-switcher">
+      <header class="tab-switcher-header">
+        <button class="switcher-action-btn" id="btn-close-switcher">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="switcher-mode-tabs">
+          <button class="mode-tab active" id="tab-mode-standard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            <span>Tabs</span>
+          </button>
+          <button class="mode-tab" id="tab-mode-incognito">
+            <span style="font-size:16px;">🕶️</span>
+            <span>Incognito</span>
+          </button>
+        </div>
+        <button class="switcher-action-btn" id="btn-switcher-new-tab" title="New Tab">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+      </header>
+
+      <div class="tab-cards-grid" id="mobile-tab-cards-container">
+        <!-- Mobile tab cards rendered dynamically -->
+      </div>
+    </div>
+
   </div> <!-- End .chrome-window -->
 
-  <!-- ===== MODALS & POPUPS ===== -->
+  <!-- ==========================================
+       6. CHROME 3-DOTS MOBILE & DESKTOP MENU
+       ========================================== -->
+  <div class="chrome-menu" id="chrome-menu">
+    <!-- Mobile Chrome top action row (Back, Forward, Star, Download, Reload) -->
+    <div class="mobile-menu-action-row mobile-only">
+      <button class="menu-action-icon" id="menu-btn-forward" title="Forward">➔</button>
+      <button class="menu-action-icon" id="menu-btn-star" title="Bookmark">⭐</button>
+      <button class="menu-action-icon" id="menu-btn-download" title="Downloads">📥</button>
+      <button class="menu-action-icon" id="menu-btn-info" title="Info">ⓘ</button>
+      <button class="menu-action-icon" id="menu-btn-reload" title="Reload">🔄</button>
+    </div>
+    <div class="menu-divider mobile-only"></div>
+
+    <div class="menu-item" id="menu-new-tab">
+      <span>New tab</span>
+      <span class="shortcut">Ctrl+T</span>
+    </div>
+    <div class="menu-item" id="menu-new-window">
+      <span>New Incognito tab</span>
+      <span class="shortcut">Ctrl+Shift+N</span>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-item" id="menu-history">
+      <span>History</span>
+      <span class="shortcut">Ctrl+H</span>
+    </div>
+    <div class="menu-item text-danger" id="menu-clear-data">
+      <span>Clear browsing data...</span>
+      <span class="shortcut">Ctrl+Shift+Del</span>
+    </div>
+    <div class="menu-item" id="menu-bookmarks">
+      <span>Bookmarks</span>
+      <span class="shortcut">Ctrl+Shift+O</span>
+    </div>
+    <div class="menu-divider"></div>
+    <!-- Desktop Site Checkbox (Chrome Android feature) -->
+    <div class="menu-item" id="menu-desktop-site">
+      <span>Desktop site</span>
+      <input type="checkbox" id="chk-desktop-site">
+    </div>
+    <div class="menu-item" id="menu-anti-lag-demo">
+      <span style="color:#f59e0b;">⚡ LMArena Chat Anti-Lag</span>
+    </div>
+    <div class="menu-item" id="menu-adblock-shield">
+      <span style="color:#38bdf8;">🛡️ Turbo Shield Stats</span>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-item" id="menu-github">
+      <span>FastBrowser Source Code</span>
+    </div>
+    <div class="menu-item" id="menu-about">
+      <span>About FastBrowser</span>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       7. CLEAR BROWSING DATA MODAL (User Requested)
+       ========================================== -->
+  <div class="modal-backdrop" id="modal-clear-data">
+    <div class="chrome-modal">
+      <div class="modal-header">
+        <h2>Clear browsing data</h2>
+        <button class="modal-close-btn" id="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab active">Basic</button>
+        <button class="modal-tab">Advanced</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="select-time-range">Time range:</label>
+          <select class="chrome-select" id="select-time-range">
+            <option value="1h">Last hour</option>
+            <option value="24h">Last 24 hours</option>
+            <option value="7d">Last 7 days</option>
+            <option value="4w">Last 4 weeks</option>
+            <option value="all" selected>All time</option>
+          </select>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="custom-checkbox">
+            <input type="checkbox" id="chk-clear-history" checked>
+            <span class="checkbox-box"></span>
+            <div class="checkbox-text">
+              <strong>Browsing history</strong>
+              <small>Clears history and autocompletions in address bar. (Work is preserved until you click Clear data)</small>
+            </div>
+          </label>
+
+          <label class="custom-checkbox">
+            <input type="checkbox" id="chk-clear-cookies" checked>
+            <span class="checkbox-box"></span>
+            <div class="checkbox-text">
+              <strong>Cookies and site data</strong>
+              <small>Signs you out of most websites.</small>
+            </div>
+          </label>
+
+          <label class="custom-checkbox">
+            <input type="checkbox" id="chk-clear-cache" checked>
+            <span class="checkbox-box"></span>
+            <div class="checkbox-text">
+              <strong>Cached images and files</strong>
+              <small>Frees up local phone memory.</small>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-clear">Cancel</button>
+        <button class="btn btn-primary btn-danger" id="btn-confirm-clear">Clear data</button>
+      </div>
+    </div>
+  </div>
 
   <!-- A. AdBlocker & Turbo Shield Popup -->
   <div class="chrome-popup" id="popup-adblock">
@@ -189,177 +336,7 @@
     </div>
   </div>
 
-  <!-- B. LMArena Anti-Lag Engine Popup -->
-  <div class="chrome-popup" id="popup-lmarena">
-    <div class="popup-header">
-      <div class="popup-title">
-        <span style="color:#f59e0b; font-size:18px;">⚡</span>
-        <span>LMArena Chat Anti-Lag</span>
-      </div>
-      <span class="status-pill active" id="lag-engine-status">ACTIVE</span>
-    </div>
-    <div class="popup-body">
-      <div class="feature-item">
-        <input type="checkbox" id="chk-content-visibility" checked>
-        <label for="chk-content-visibility">
-          <strong>CSS Virtualization (`content-visibility: auto`)</strong>
-          <small>Skips layout & rendering of off-screen turns (70-90% faster)</small>
-        </label>
-      </div>
-      <div class="feature-item">
-        <input type="checkbox" id="chk-fold-logs" checked>
-        <label for="chk-fold-logs">
-          <strong>Auto-Fold Tool & Terminal Outputs</strong>
-          <small>Collapses bash logs >15 lines to prevent 50,000+ DOM explosion</small>
-        </label>
-      </div>
-      <div class="feature-item">
-        <input type="checkbox" id="chk-throttle-streaming" checked>
-        <label for="chk-throttle-streaming">
-          <strong>Stream Reflow Throttle</strong>
-          <small>Buffers token updates using micro-tasks for buttery 60fps</small>
-        </label>
-      </div>
-
-      <div class="popup-actions">
-        <button class="btn btn-primary" id="btn-purge-dom" style="width:100%;">
-          🧹 Force Clean DOM & Free Memory
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- C. Chrome 3-Dots Menu -->
-  <div class="chrome-menu" id="chrome-menu">
-    <div class="menu-item" id="menu-new-tab">
-      <span>New tab</span>
-      <span class="shortcut">Ctrl+T</span>
-    </div>
-    <div class="menu-item" id="menu-new-window">
-      <span>New Incognito tab</span>
-      <span class="shortcut">Ctrl+Shift+N</span>
-    </div>
-    <div class="menu-divider"></div>
-    <div class="menu-item" id="menu-history">
-      <span>History</span>
-      <span class="shortcut">Ctrl+H</span>
-    </div>
-    <div class="menu-item text-danger" id="menu-clear-data">
-      <span>Delete browsing data...</span>
-      <span class="shortcut">Ctrl+Shift+Del</span>
-    </div>
-    <div class="menu-item" id="menu-bookmarks">
-      <span>Bookmarks</span>
-      <span class="shortcut">Ctrl+Shift+O</span>
-    </div>
-    <div class="menu-divider"></div>
-    <div class="menu-row">
-      <span>Zoom</span>
-      <div class="zoom-controls">
-        <button class="zoom-btn" id="btn-zoom-out">−</button>
-        <span id="zoom-level">100%</span>
-        <button class="zoom-btn" id="btn-zoom-in">+</button>
-      </div>
-    </div>
-    <div class="menu-divider"></div>
-    <div class="menu-item" id="menu-anti-lag-demo">
-      <span>⚡ Test LMArena Lag Eliminator</span>
-    </div>
-    <div class="menu-item" id="menu-github">
-      <span>FastBrowser Source Code</span>
-    </div>
-    <div class="menu-item" id="menu-about">
-      <span>About FastBrowser</span>
-    </div>
-  </div>
-
-  <!-- D. Clear Browsing Data Dialog (User Requested Feature) -->
-  <div class="modal-backdrop" id="modal-clear-data">
-    <div class="chrome-modal">
-      <div class="modal-header">
-        <h2>Clear browsing data</h2>
-        <button class="modal-close-btn" id="btn-close-modal">✕</button>
-      </div>
-
-      <div class="modal-tabs">
-        <button class="modal-tab active">Basic</button>
-        <button class="modal-tab">Advanced</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="select-time-range">Time range:</label>
-          <select class="chrome-select" id="select-time-range">
-            <option value="1h">Last hour</option>
-            <option value="24h">Last 24 hours</option>
-            <option value="7d">Last 7 days</option>
-            <option value="4w">Last 4 weeks</option>
-            <option value="all" selected>All time</option>
-          </select>
-        </div>
-
-        <div class="checkbox-group">
-          <label class="custom-checkbox">
-            <input type="checkbox" id="chk-clear-history" checked>
-            <span class="checkbox-box"></span>
-            <div class="checkbox-text">
-              <strong>Browsing history</strong>
-              <small>Clears history and autocompletions in the address bar. (Your work is saved until you click Clear data)</small>
-            </div>
-          </label>
-
-          <label class="custom-checkbox">
-            <input type="checkbox" id="chk-clear-cookies" checked>
-            <span class="checkbox-box"></span>
-            <div class="checkbox-text">
-              <strong>Cookies and other site data</strong>
-              <small>Signs you out of most sites.</small>
-            </div>
-          </label>
-
-          <label class="custom-checkbox">
-            <input type="checkbox" id="chk-clear-cache" checked>
-            <span class="checkbox-box"></span>
-            <div class="checkbox-text">
-              <strong>Cached images and files</strong>
-              <small>Frees up local RAM and storage.</small>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" id="btn-cancel-clear">Cancel</button>
-        <button class="btn btn-primary btn-danger" id="btn-confirm-clear">Clear data</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- E. Add Bookmark Modal -->
-  <div class="modal-backdrop" id="modal-add-bookmark">
-    <div class="chrome-modal small-modal">
-      <div class="modal-header">
-        <h2>Bookmark added</h2>
-        <button class="modal-close-btn" id="btn-close-bm-modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="bm-name-input">Name:</label>
-          <input type="text" class="chrome-input" id="bm-name-input">
-        </div>
-        <div class="form-group">
-          <label for="bm-url-input">URL:</label>
-          <input type="text" class="chrome-input" id="bm-url-input">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" id="btn-cancel-bm">Cancel</button>
-        <button class="btn btn-primary" id="btn-save-bm">Done</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Core Scripts -->
+  <!-- Core Script -->
   <script src="app.js"></script>
 </body>
 </html>
