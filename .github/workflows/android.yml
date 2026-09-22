@@ -1,15 +1,13 @@
-name: Build Android APK (Gradle)
+name: Build FastBrowser Android APK
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-apk:
-    name: Build FastBrowser Android APK
+  build:
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +20,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Build with Gradle
+      - name: Build APK with Gradle
         working-directory: android
         run: |
           gradle assembleDebug --stacktrace
@@ -33,5 +31,5 @@ jobs:
       - name: Upload FastBrowser APK
         uses: actions/upload-artifact@v4
         with:
-          name: FastBrowser-Android-APK
+          name: FastBrowser-APK
           path: android/app/build/outputs/apk/debug/*.apk
