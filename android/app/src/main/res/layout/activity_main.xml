@@ -1,72 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#202124">
 
-    <!-- Chrome Top Mobile Toolbar -->
+    <!-- 1. TOP MOBILE CHROME TOOLBAR -->
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
         android:background="#323639"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingEnd="8dp">
 
         <ImageButton
             android:id="@+id/btn_home"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_today"
             android:contentDescription="Home" />
 
-        <!-- Omnibox -->
-        <EditText
-            android:id="@+id/omnibox"
+        <!-- Omnibox Pill -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
             android:layout_marginEnd="6dp"
             android:background="@android:drawable/editbox_background_normal"
-            android:hint="Search or type URL"
-            android:imeOptions="actionGo"
-            android:inputType="textUri"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:singleLine="true"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#9AA0A6"
-            android:textSize="14sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp">
 
-        <Button
-            android:id="@+id/btn_clear_data"
-            android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/omnibox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Search or type URL"
+                android:imeOptions="actionGo"
+                android:inputType="textUri"
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#9AA0A6"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/btn_reload"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_rotate"
+                android:contentDescription="Reload" />
+
+        </LinearLayout>
+
+        <!-- Signature Tab Switcher Square Button -->
+        <FrameLayout
+            android:id="@+id/btn_tab_switcher"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <TextView
+                android:id="@+id/tab_count_text"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:background="@android:drawable/dialog_holo_dark_frame"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="#E8EAED"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <!-- Chrome 3-Dots Menu -->
+        <ImageButton
+            android:id="@+id/btn_menu"
+            android:layout_width="36dp"
             android:layout_height="36dp"
-            android:backgroundTint="#D93025"
-            android:text="Clear"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_more"
+            android:contentDescription="Menu" />
 
     </LinearLayout>
 
-    <!-- Loading Bar -->
+    <!-- 2. LOADING BAR -->
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"
+        android:layout_below="@id/toolbar"
+        android:progressDrawable="@android:drawable/progress_horizontal"
         android:visibility="gone" />
 
-    <!-- Chromium Powered WebView -->
-    <WebView
-        android:id="@+id/webview"
+    <!-- 3. MULTI-TAB WEBVIEW CONTAINER -->
+    <FrameLayout
+        android:id="@+id/webview_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/progress_bar" />
 
-</LinearLayout>
+    <!-- 4. FULLSCREEN VIDEO VIEW CONTAINER -->
+    <FrameLayout
+        android:id="@+id/custom_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:visibility="gone" />
+
+</RelativeLayout>
