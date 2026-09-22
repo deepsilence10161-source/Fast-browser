@@ -1,0 +1,54 @@
+{
+  "name": "fast-browser",
+  "version": "1.0.0",
+  "description": "Ultra-fast, zero-telemetry Chrome clone with LMArena Anti-Lag Engine & One-Click History Eraser",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "preview": "node src/server.js",
+    "electron": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --mac"
+  },
+  "keywords": [
+    "browser",
+    "chrome",
+    "fast",
+    "anti-lag",
+    "lmarena",
+    "zero-telemetry",
+    "privacy",
+    "adblock"
+  ],
+  "author": "deepsilence10161-source",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.deepsilence.fastbrowser",
+    "productName": "FastBrowser",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": ["nsis", "portable"],
+      "icon": "assets/icon.png"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Network;WebBrowser"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.developer-tools"
+    }
+  }
+}

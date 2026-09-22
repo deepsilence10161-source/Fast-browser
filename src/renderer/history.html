@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>History - FastBrowser</title>
+  <style>
+    :root {
+      --bg: #202124;
+      --sidebar-bg: #202124;
+      --card-bg: #292a2d;
+      --text: #e8eaed;
+      --text-muted: #9aa0a6;
+      --border: rgba(255, 255, 255, 0.1);
+      --accent: #8ab4f8;
+      --primary: #1a73e8;
+      --danger: #f28b82;
+      --hover: rgba(255, 255, 255, 0.08);
+      --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-family);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* SIDEBAR */
+    .history-sidebar {
+      width: 256px;
+      background-color: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      gap: 8px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 0 12px;
+      color: var(--text);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .nav-item:hover {
+      background-color: var(--hover);
+      color: var(--text);
+    }
+    .nav-item.active {
+      background-color: rgba(138, 180, 248, 0.15);
+      color: var(--accent);
+    }
+
+    .btn-clear-sidebar {
+      margin-top: auto;
+      background-color: transparent;
+      color: var(--danger);
+      border: 1px solid rgba(242, 139, 130, 0.3);
+      padding: 10px 16px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .btn-clear-sidebar:hover {
+      background-color: rgba(242, 139, 130, 0.15);
+      border-color: var(--danger);
+    }
+
+    /* MAIN CONTAINER */
+    .history-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    /* TOP HEADER & SEARCH */
+    .history-header {
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      background-color: var(--bg);
+      z-index: 10;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--card-bg);
+      padding: 0 16px;
+      height: 40px;
+      border-radius: 20px;
+      width: 480px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .search-box:focus-within {
+      border-color: var(--accent);
+      background-color: #35363a;
+    }
+    .search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .selected-bar {
+      display: none;
+      align-items: center;
+      gap: 16px;
+      background: rgba(138, 180, 248, 0.15);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+    .selected-bar.show {
+      display: flex;
+    }
+    .btn-delete-selected {
+      background-color: var(--danger);
+      color: #000;
+      border: none;
+      padding: 5px 14px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* CONTENT LIST */
+    .history-content {
+      padding: 24px 32px;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .date-group-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .history-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      transition: background-color 0.1s ease;
+    }
+    .history-row:last-child {
+      border-bottom: none;
+    }
+    .history-row:hover {
+      background-color: var(--hover);
+    }
+
+    .row-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 65px;
+      flex-shrink: 0;
+    }
+
+    .row-favicon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .row-title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .row-title:hover {
+      text-decoration: underline;
+    }
+
+    .row-domain {
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .row-delete-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      opacity: 0.6;
+      transition: all 0.15s ease;
+    }
+    .row-delete-btn:hover {
+      opacity: 1;
+      color: var(--danger);
+      background-color: rgba(242, 139, 130, 0.15);
+    }
+
+    .empty-state {
+      padding: 60px 0;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="history-sidebar">
+    <div class="brand-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8ab4f8" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>History</span>
+    </div>
+
+    <div class="nav-item active">
+      <span>Chrome history</span>
+    </div>
+    <div class="nav-item">
+      <span>Tabs from other devices</span>
+    </div>
+
+    <!-- Prominent User-Requested Clear History Button -->
+    <button class="btn-clear-sidebar" id="btn-open-clear-data">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      <span>Clear browsing data</span>
+    </button>
+  </aside>
+
+  <!-- MAIN HISTORY LIST -->
+  <main class="history-main">
+    <header class="history-header">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" id="search-history" placeholder="Search history">
+      </div>
+
+      <div class="selected-bar" id="selected-bar">
+        <span id="selected-count">0 items selected</span>
+        <button class="btn-delete-selected" id="btn-delete-selected">Delete</button>
+        <button style="background:transparent; border:none; color:inherit; cursor:pointer;" id="btn-cancel-select">Cancel</button>
+      </div>
+    </header>
+
+    <div class="history-content" id="history-content">
+      <!-- Injected by history logic -->
+    </div>
+  </main>
+
+  <script>
+    let historyItems = [];
+    const selectedIds = new Set();
+
+    async function loadHistory(query = '') {
+      try {
+        const res = await fetch(`/api/history?q=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        if (data.success) {
+          historyItems = data.history;
+          renderHistory(historyItems);
+        }
+      } catch (err) {
+        console.error('Failed to load history:', err);
+      }
+    }
+
+    function renderHistory(items) {
+      const container = document.getElementById('history-content');
+      selectedIds.clear();
+      updateSelectedBar();
+
+      if (!items || items.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🕒</div>
+            <h3>No browsing history found</h3>
+            <p style="margin-top:6px; font-size:12px;">Your work history is safely kept locally until you choose to delete it.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Group by date string (e.g. "Today - Tuesday, Sep 22, 2026")
+      const groups = {};
+      const todayStr = new Date().toDateString();
+
+      items.forEach(item => {
+        const itemDate = new Date(item.timestamp).toDateString();
+        let dateLabel = itemDate;
+        if (itemDate === todayStr) {
+          dateLabel = `Today - ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}`;
+        }
+        if (!groups[dateLabel]) groups[dateLabel] = [];
+        groups[dateLabel].push(item);
+      });
+
+      let html = '';
+      for (const [dateLabel, entries] of Object.entries(groups)) {
+        html += `
+          <div class="date-group">
+            <div class="date-group-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>${dateLabel}</span>
+            </div>
+            <div class="history-card">
+        `;
+
+        entries.forEach(entry => {
+          const timeStr = new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          let domain = '';
+          try { domain = new URL(entry.url).hostname; } catch {}
+
+          html += `
+            <div class="history-row" data-id="${entry.id}">
+              <input type="checkbox" class="entry-checkbox" data-id="${entry.id}">
+              <span class="row-time">${timeStr}</span>
+              <img class="row-favicon" src="${entry.favicon || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%238ab4f8%22/></svg>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%238ab4f8%22/></svg>'">
+              <a class="row-title" href="#" data-url="${entry.url}">${escapeHtml(entry.title)}</a>
+              <span class="row-domain">${domain}</span>
+              <button class="row-delete-btn" data-id="${entry.id}" title="Remove from history">✕</button>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+
+      // Attach event listeners
+      container.querySelectorAll('.entry-checkbox').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-id');
+          if (e.target.checked) selectedIds.add(id);
+          else selectedIds.delete(id);
+          updateSelectedBar();
+        });
+      });
+
+      container.querySelectorAll('.row-title').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const url = link.getAttribute('data-url');
+          window.parent.postMessage({ type: 'NAVIGATE', url }, '*');
+        });
+      });
+
+      container.querySelectorAll('.row-delete-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const id = btn.getAttribute('data-id');
+          await deleteEntry(id);
+        });
+      });
+    }
+
+    function updateSelectedBar() {
+      const bar = document.getElementById('selected-bar');
+      const countEl = document.getElementById('selected-count');
+      if (selectedIds.size > 0) {
+        bar.classList.add('show');
+        countEl.textContent = `${selectedIds.size} item${selectedIds.size > 1 ? 's' : ''} selected`;
+      } else {
+        bar.classList.remove('show');
+      }
+    }
+
+    async function deleteEntry(id) {
+      try {
+        await fetch(`/api/history/${id}`, { method: 'DELETE' });
+        loadHistory(document.getElementById('search-history').value);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.getElementById('btn-delete-selected').addEventListener('click', async () => {
+      if (selectedIds.size === 0) return;
+      try {
+        await fetch('/api/history/delete-selected', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids: Array.from(selectedIds) })
+        });
+        loadHistory(document.getElementById('search-history').value);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    document.getElementById('btn-cancel-select').addEventListener('click', () => {
+      selectedIds.clear();
+      document.querySelectorAll('.entry-checkbox').forEach(cb => cb.checked = false);
+      updateSelectedBar();
+    });
+
+    // Open Clear Browsing Data Dialog in parent Chrome window
+    document.getElementById('btn-open-clear-data').addEventListener('click', () => {
+      window.parent.postMessage({ type: 'OPEN_CLEAR_DATA_MODAL' }, '*');
+    });
+
+    // Search filter
+    document.getElementById('search-history').addEventListener('input', (e) => {
+      loadHistory(e.target.value);
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Listen for parent messages (e.g. reload after clear)
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'RELOAD_HISTORY') {
+        loadHistory();
+      }
+    });
+
+    // Initial load
+    loadHistory();
+  </script>
+</body>
+</html>

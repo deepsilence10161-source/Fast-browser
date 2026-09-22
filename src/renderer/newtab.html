@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>New Tab</title>
+  <style>
+    :root {
+      --bg: #202124;
+      --card-bg: #292a2d;
+      --text: #e8eaed;
+      --text-muted: #9aa0a6;
+      --search-bg: #303134;
+      --search-border: #5f6368;
+      --tile-hover: #3c4043;
+      --accent: #8ab4f8;
+      --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-family);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 60px 20px 30px 20px;
+      user-select: none;
+    }
+
+    .ntp-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .ntp-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .logo-chrome-circle {
+      width: 48px;
+      height: 48px;
+    }
+    .logo-part-fast { color: #8ab4f8; }
+    .logo-part-browser { color: #e8eaed; font-weight: 400; }
+
+    .ntp-badge-container {
+      display: flex;
+      gap: 10px;
+    }
+    .badge-pill {
+      background: rgba(138, 180, 248, 0.12);
+      border: 1px solid rgba(138, 180, 248, 0.3);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge-pill.turbo {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #f59e0b;
+    }
+
+    /* SEARCH BAR */
+    .ntp-search-box {
+      width: 100%;
+      max-width: 600px;
+      background-color: var(--search-bg);
+      border: 1px solid transparent;
+      border-radius: 24px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 12px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.28);
+      transition: all 0.2s ease;
+      margin-bottom: 35px;
+    }
+    .ntp-search-box:hover, .ntp-search-box:focus-within {
+      background-color: #383a3e;
+      border-color: var(--search-border);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .search-icon {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      color: var(--text);
+      font-family: inherit;
+    }
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* SPEED DIAL GRID */
+    .speed-dial-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 110px);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 600px) {
+      .speed-dial-grid { grid-template-columns: repeat(3, 100px); }
+    }
+
+    .speed-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text);
+      transition: background-color 0.15s ease, transform 0.1s ease;
+    }
+    .speed-tile:hover {
+      background-color: var(--tile-hover);
+      transform: translateY(-2px);
+    }
+
+    .tile-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: #35363a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .tile-icon-circle img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+    .tile-title {
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90px;
+      text-align: center;
+    }
+
+    /* TURBO DASHBOARD */
+    .dashboard-panel {
+      width: 100%;
+      max-width: 680px;
+      background-color: var(--card-bg);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dash-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .metric-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+    }
+    .metric-num {
+      font-size: 20px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .anti-lag-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.1));
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+    }
+    .banner-text strong {
+      color: #f59e0b;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .btn-test-lag {
+      background: #f59e0b;
+      color: #000;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: filter 0.15s;
+    }
+    .btn-test-lag:hover {
+      filter: brightness(1.15);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ntp-header">
+    <div class="ntp-logo">
+      <svg class="logo-chrome-circle" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="48" fill="#1a73e8"/>
+        <path d="M50 18 A32 32 0 0 1 82 50 L50 50 Z" fill="#ea4335"/>
+        <path d="M82 50 A32 32 0 0 1 34 77.7 L50 50 Z" fill="#fbbc05"/>
+        <path d="M34 77.7 A32 32 0 0 1 18 50 L50 50 Z" fill="#34a853"/>
+        <circle cx="50" cy="50" r="18" fill="#ffffff"/>
+        <circle cx="50" cy="50" r="14" fill="#1a73e8"/>
+      </svg>
+      <div><span class="logo-part-fast">Fast</span><span class="logo-part-browser">Browser</span></div>
+    </div>
+    <div class="ntp-badge-container">
+      <div class="badge-pill">🔒 Zero-Tracking (No Google Telemetry)</div>
+      <div class="badge-pill turbo">⚡ 100x Turbo Speed Shield</div>
+      <div class="badge-pill">💾 Local Persistent History</div>
+    </div>
+  </div>
+
+  <!-- Search Input -->
+  <form class="ntp-search-box" id="search-form">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" class="search-input" id="search-query" placeholder="Search the web or type a URL" autofocus>
+  </form>
+
+  <!-- Speed Dial Grid -->
+  <div class="speed-dial-grid">
+    <a class="speed-tile" href="demo-lmarena" data-url="demo-lmarena">
+      <div class="tile-icon-circle" style="background:#f59e0b1f; color:#f59e0b; font-size:22px;">⚡</div>
+      <span class="tile-title">Anti-Lag Demo</span>
+    </a>
+    <a class="speed-tile" href="https://lmarena.ai" data-url="https://lmarena.ai">
+      <div class="tile-icon-circle"><img src="https://lmarena.ai/favicon.ico" alt="LMArena"></div>
+      <span class="tile-title">LMArena.ai</span>
+    </a>
+    <a class="speed-tile" href="https://github.com/deepsilence10161-source/Fast-browser" data-url="https://github.com/deepsilence10161-source/Fast-browser">
+      <div class="tile-icon-circle"><img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub"></div>
+      <span class="tile-title">GitHub Repo</span>
+    </a>
+    <a class="speed-tile" href="https://en.wikipedia.org" data-url="https://en.wikipedia.org">
+      <div class="tile-icon-circle"><img src="https://en.wikipedia.org/favicon.ico" alt="Wikipedia"></div>
+      <span class="tile-title">Wikipedia</span>
+    </a>
+    <a class="speed-tile" href="https://news.ycombinator.com" data-url="https://news.ycombinator.com">
+      <div class="tile-icon-circle"><img src="https://news.ycombinator.com/favicon.ico" alt="HN"></div>
+      <span class="tile-title">Hacker News</span>
+    </a>
+    <a class="speed-tile" href="https://duckduckgo.com" data-url="https://duckduckgo.com">
+      <div class="tile-icon-circle"><img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo"></div>
+      <span class="tile-title">DuckDuckGo</span>
+    </a>
+    <a class="speed-tile" href="chrome://history" data-url="chrome://history">
+      <div class="tile-icon-circle" style="font-size:20px;">🕒</div>
+      <span class="tile-title">History</span>
+    </a>
+    <a class="speed-tile" href="#" id="btn-add-shortcut">
+      <div class="tile-icon-circle" style="font-size:20px;">+</div>
+      <span class="tile-title">Add Shortcut</span>
+    </a>
+  </div>
+
+  <!-- Real-Time Turbo & Privacy Shield Dashboard -->
+  <div class="dashboard-panel">
+    <div class="dash-header">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Live Performance & Protection Stats
+      </h3>
+      <span style="font-size:11px; color:#81c995; font-weight:600;">ACTIVE SHIELD</span>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-num" id="metric-blocked">128</div>
+        <div class="metric-label">Trackers & Ads Blocked</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num" style="color:#f59e0b;">8.4x</div>
+        <div class="metric-label">Speed Acceleration</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num" style="color:#81c995;" id="metric-saved">14.2 MB</div>
+        <div class="metric-label">Data / Bandwidth Saved</div>
+      </div>
+    </div>
+
+    <div class="anti-lag-banner">
+      <div class="banner-text">
+        <strong>⚡ LMArena Agent Mode Lag Fixer is Ready</strong>
+        <span>Automatically skips off-screen DOM reflows so 100+ turn chats never stutter or freeze.</span>
+      </div>
+      <button class="btn-test-lag" id="btn-banner-demo">Run Benchmark</button>
+    </div>
+  </div>
+
+  <script>
+    // Handle Search Form Submission
+    const form = document.getElementById('search-form');
+    const input = document.getElementById('search-query');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value.trim();
+      if (!val) return;
+      window.parent.postMessage({ type: 'NAVIGATE', url: val }, '*');
+    });
+
+    // Handle speed tile clicks
+    document.querySelectorAll('.speed-tile').forEach(tile => {
+      tile.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = tile.getAttribute('data-url');
+        if (url) {
+          window.parent.postMessage({ type: 'NAVIGATE', url }, '*');
+        }
+      });
+    });
+
+    document.getElementById('btn-banner-demo').addEventListener('click', () => {
+      window.parent.postMessage({ type: 'NAVIGATE', url: 'demo-lmarena' }, '*');
+    });
+
+    // Update real-time stats from parent
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'UPDATE_STATS') {
+        if (event.data.blocked !== undefined) {
+          document.getElementById('metric-blocked').textContent = event.data.blocked;
+        }
+        if (event.data.saved !== undefined) {
+          document.getElementById('metric-saved').textContent = event.data.saved + ' MB';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

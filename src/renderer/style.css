@@ -1,0 +1,933 @@
+/* ==========================================================
+   FASTBROWSER - EXACT GOOGLE CHROME MATERIAL DESIGN 3 THEME
+   Zero-Bloat, High-Performance, Ultra-Fluid CSS
+   ========================================================== */
+
+:root {
+  /* Chrome Dark Mode Colors (Default) */
+  --chrome-bg: #202124;
+  --tabbar-bg: #1f1f1f;
+  --tab-active-bg: #323639;
+  --tab-inactive-hover: #292a2d;
+  --tab-text: #e8eaed;
+  --tab-inactive-text: #9aa0a6;
+  --toolbar-bg: #323639;
+  --omnibox-bg: #202124;
+  --omnibox-focus-bg: #202124;
+  --omnibox-border: #5f6368;
+  --omnibox-text: #ffffff;
+  --omnibox-placeholder: #80868b;
+  --icon-color: #e8eaed;
+  --icon-hover-bg: rgba(255, 255, 255, 0.08);
+  --icon-disabled: #5f6368;
+  --divider-color: #3c4043;
+  --bookmark-bar-bg: #323639;
+  --modal-bg: #292a2d;
+  --card-bg: #323639;
+  --primary-accent: #8ab4f8; /* Chrome Material Blue */
+  --primary-btn: #1a73e8;
+  --danger-color: #f28b82;
+  --success-color: #81c995;
+  --warning-color: #fdd663;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --shadow-popup: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+[data-theme="light"] {
+  --chrome-bg: #dee1e6;
+  --tabbar-bg: #dee1e6;
+  --tab-active-bg: #ffffff;
+  --tab-inactive-hover: #e8eaed;
+  --tab-text: #3c4043;
+  --tab-inactive-text: #5f6368;
+  --toolbar-bg: #ffffff;
+  --omnibox-bg: #f1f3f4;
+  --omnibox-focus-bg: #ffffff;
+  --omnibox-border: #dadce0;
+  --omnibox-text: #202124;
+  --omnibox-placeholder: #5f6368;
+  --icon-color: #5f6368;
+  --icon-hover-bg: rgba(0, 0, 0, 0.06);
+  --icon-disabled: #dadce0;
+  --divider-color: #e8eaed;
+  --bookmark-bar-bg: #ffffff;
+  --modal-bg: #ffffff;
+  --card-bg: #f8f9fa;
+  --primary-accent: #1a73e8;
+  --primary-btn: #1a73e8;
+  --danger-color: #d93025;
+  --success-color: #1e8e3e;
+  --warning-color: #e37400;
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --shadow-popup: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--chrome-bg);
+  color: var(--tab-text);
+  overflow: hidden;
+  height: 100vh;
+  user-select: none;
+}
+
+.chrome-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--tabbar-bg);
+}
+
+/* ==========================================================
+   1. CHROME TABS STRIP
+   ========================================================== */
+.chrome-titlebar {
+  display: flex;
+  align-items: flex-end;
+  height: 42px;
+  background-color: var(--tabbar-bg);
+  padding: 4px 8px 0 8px;
+  gap: 4px;
+  position: relative;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.tabs-container {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  gap: 2px;
+}
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Chrome Tab Element */
+.chrome-tab {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  min-width: 140px;
+  max-width: 240px;
+  flex: 1;
+  padding: 0 10px;
+  background-color: transparent;
+  color: var(--tab-inactive-text);
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.chrome-tab:hover {
+  background-color: var(--tab-inactive-hover);
+  color: var(--tab-text);
+}
+
+.chrome-tab.active {
+  background-color: var(--toolbar-bg);
+  color: var(--tab-text);
+  box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+  font-weight: 500;
+}
+
+/* Tab Favicon */
+.tab-favicon {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.tab-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: var(--primary-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+.chrome-tab.loading .tab-spinner {
+  display: inline-block;
+}
+.chrome-tab.loading .tab-favicon {
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.tab-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-close-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+.tab-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+}
+
+/* New Tab Button */
+.new-tab-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--icon-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background-color 0.15s ease;
+}
+.new-tab-btn:hover {
+  background-color: var(--icon-hover-bg);
+}
+
+/* Window Control Buttons */
+.window-controls {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-left: auto;
+}
+.win-btn {
+  width: 44px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: var(--icon-color);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+.win-btn:hover {
+  background-color: var(--icon-hover-bg);
+}
+.win-close:hover {
+  background-color: #e81123 !important;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   2. CHROME NAVIGATION & OMNIBOX TOOLBAR
+   ========================================================== */
+.chrome-toolbar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: var(--toolbar-bg);
+  padding: 0 10px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 10;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-btn, .ext-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--icon-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.nav-btn:hover:not(:disabled),
+.ext-btn:hover {
+  background-color: var(--icon-hover-bg);
+}
+
+.nav-btn:disabled {
+  color: var(--icon-disabled);
+  cursor: default;
+}
+
+/* OMNIBOX */
+.omnibox-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 34px;
+  background-color: var(--omnibox-bg);
+  border-radius: 17px;
+  padding: 0 12px;
+  gap: 8px;
+  position: relative;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.omnibox-wrapper:focus-within {
+  background-color: var(--omnibox-focus-bg);
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.2);
+}
+
+.omnibox-icon {
+  color: var(--success-color);
+  display: flex;
+  align-items: center;
+}
+
+.omnibox-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--omnibox-text);
+}
+.omnibox-input::placeholder {
+  color: var(--omnibox-placeholder);
+}
+
+.omnibox-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.omnibox-btn {
+  background: transparent;
+  border: none;
+  color: var(--icon-color);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.omnibox-btn:hover {
+  background-color: var(--icon-hover-bg);
+}
+
+.turbo-badge {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 1px 4px rgba(239, 68, 68, 0.3);
+}
+
+.star-icon.bookmarked {
+  fill: var(--primary-accent);
+  stroke: var(--primary-accent);
+}
+
+/* Omnibox Autocomplete Dropdown */
+.omnibox-suggestions {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  right: 0;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-popup);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: none;
+  z-index: 100;
+}
+.omnibox-suggestions.show {
+  display: block;
+}
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 9px 14px;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--tab-text);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+.suggestion-item:hover {
+  background-color: var(--icon-hover-bg);
+}
+
+/* EXTENSION BAR */
+.extension-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-count {
+  position: absolute;
+  top: 1px;
+  right: -2px;
+  background-color: var(--primary-btn);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 8px;
+}
+
+.highlight-btn {
+  color: #f59e0b;
+}
+.delete-btn {
+  color: var(--danger-color);
+}
+.delete-btn:hover {
+  background-color: rgba(242, 139, 130, 0.15);
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a73e8, #8ab4f8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   3. CHROME BOOKMARKS BAR
+   ========================================================== */
+.chrome-bookmarks-bar {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  background-color: var(--bookmark-bar-bg);
+  padding: 0 10px;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  font-size: 11px;
+}
+
+.bookmark-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--tab-text);
+  cursor: pointer;
+  gap: 5px;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+.bookmark-item:hover {
+  background-color: var(--icon-hover-bg);
+}
+.bm-favicon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+.bm-icon {
+  font-size: 12px;
+}
+.action-bm {
+  color: var(--primary-accent);
+  font-weight: 500;
+}
+
+/* ==========================================================
+   4. CONTENT AREA & VIEWS
+   ========================================================== */
+.chrome-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.page-loading-bar {
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #1a73e8, #38bdf8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  transition: width 0.2s ease, opacity 0.3s ease;
+}
+
+.tab-views-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.tab-view-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+.tab-view-frame.active {
+  display: block;
+}
+
+/* ==========================================================
+   5. POPUPS & CHROME MENUS
+   ========================================================== */
+.chrome-popup {
+  position: absolute;
+  top: 92px;
+  right: 60px;
+  width: 320px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-popup);
+  border: 1px solid var(--border-subtle);
+  padding: 16px;
+  z-index: 200;
+  display: none;
+  animation: fadeIn 0.15s ease-out;
+}
+.chrome-popup.show {
+  display: block;
+}
+
+#popup-lmarena {
+  right: 110px;
+  width: 340px;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.popup-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+.status-pill.active {
+  background-color: rgba(129, 201, 149, 0.2);
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+}
+
+.shield-stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+.stat-value.highlight {
+  color: #38bdf8;
+  font-weight: bold;
+  font-size: 14px;
+}
+.stat-value.speed {
+  color: #f59e0b;
+  font-weight: bold;
+}
+.stat-value.safe {
+  color: var(--success-color);
+  font-weight: bold;
+}
+.popup-note {
+  font-size: 11px;
+  color: var(--tab-inactive-text);
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+.feature-item strong {
+  display: block;
+  color: var(--tab-text);
+}
+.feature-item small {
+  display: block;
+  color: var(--tab-inactive-text);
+  margin-top: 2px;
+}
+
+/* Chrome 3-Dots Menu */
+.chrome-menu {
+  position: absolute;
+  top: 92px;
+  right: 12px;
+  width: 250px;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow-popup);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 0;
+  z-index: 200;
+  display: none;
+}
+.chrome-menu.show {
+  display: block;
+}
+.menu-item, .menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--tab-text);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+.menu-item:hover {
+  background-color: var(--icon-hover-bg);
+}
+.menu-item .shortcut {
+  font-size: 11px;
+  color: var(--tab-inactive-text);
+}
+.menu-divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: 4px 0;
+}
+.text-danger {
+  color: var(--danger-color) !important;
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.zoom-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--omnibox-bg);
+  border: 1px solid var(--border-subtle);
+  color: var(--tab-text);
+  cursor: pointer;
+}
+
+/* ==========================================================
+   6. MODAL DIALOGS (Clear Browsing Data, Bookmark)
+   ========================================================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+}
+.modal-backdrop.show {
+  display: flex;
+}
+
+.chrome-modal {
+  background-color: var(--modal-bg);
+  width: 500px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-popup);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalScale 0.18s ease-out;
+}
+.small-modal {
+  width: 380px;
+}
+
+@keyframes modalScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.modal-header h2 {
+  font-size: 16px;
+  font-weight: 500;
+}
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--icon-color);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.modal-close-btn:hover {
+  background-color: var(--icon-hover-bg);
+}
+
+.modal-tabs {
+  display: flex;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.modal-tab {
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: var(--tab-inactive-text);
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.modal-tab.active {
+  color: var(--primary-accent);
+  border-bottom-color: var(--primary-accent);
+  font-weight: 500;
+}
+
+.modal-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label {
+  font-size: 12px;
+  color: var(--tab-inactive-text);
+}
+.chrome-select, .chrome-input {
+  background-color: var(--omnibox-bg);
+  border: 1px solid var(--omnibox-border);
+  color: var(--tab-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+}
+.chrome-select:focus, .chrome-input:focus {
+  border-color: var(--primary-accent);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+.custom-checkbox input {
+  display: none;
+}
+.checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--tab-inactive-text);
+  border-radius: 3px;
+  margin-top: 2px;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+.custom-checkbox input:checked + .checkbox-box {
+  background-color: var(--primary-btn);
+  border-color: var(--primary-btn);
+}
+.custom-checkbox input:checked + .checkbox-box::after {
+  content: '✓';
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: bold;
+}
+.checkbox-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+}
+.checkbox-text small {
+  display: block;
+  color: var(--tab-inactive-text);
+  font-size: 11px;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-subtle);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-accent);
+}
+.btn-secondary:hover {
+  background-color: var(--icon-hover-bg);
+}
+.btn-primary {
+  background-color: var(--primary-btn);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+.btn-danger {
+  background-color: #d93025 !important;
+}
+
+/* ==========================================================
+   7. TOGGLE SWITCH
+   ========================================================== */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #5f6368;
+  transition: 0.3s;
+  border-radius: 20px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: var(--primary-accent);
+}
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
