@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Downloads - FastBrowser</title>
+  <style>
+    :root {
+      --bg: #202124;
+      --card: #292a2d;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #e8eaed;
+      --text-muted: #9aa0a6;
+      --accent: #8ab4f8;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); height: 100vh; display: flex; flex-direction: column; }
+    .header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; }
+    .content { padding: 40px 24px; max-width: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text-muted); }
+    .empty-icon { font-size: 48px; margin-bottom: 14px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span>📥 Downloads</span>
+  </div>
+  <div class="content">
+    <div class="empty-icon">📁</div>
+    <h3 style="color:var(--text); margin-bottom:6px;">No downloads yet</h3>
+    <p style="font-size:13px;">Files you download will appear here.</p>
+  </div>
+</body>
+</html>

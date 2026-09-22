@@ -18,17 +18,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const historyManager = new HistoryManager(path.join(__dirname, '../data/history.json'));
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'renderer')));
-
-// CORS for iframe communications
+// 1. CORS & Frame Ancestors Middleware (MUST BE FIRST)
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
   res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Content-Security-Policy', "frame-ancestors *;");
+  res.removeHeader('X-Frame-Options');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'renderer')));
 
 // --- API Endpoints for Chrome UI ---
 

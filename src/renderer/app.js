@@ -285,6 +285,21 @@
       displayUrl = 'chrome://history';
       tab.title = 'History';
       tab.favicon = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238ab4f8"><circle cx="12" cy="12" r="10"/></svg>';
+    } else if (resolvedUrl === 'chrome://settings' || resolvedUrl === 'settings') {
+      resolvedUrl = 'settings.html';
+      displayUrl = 'chrome://settings';
+      tab.title = 'Settings';
+      tab.favicon = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238ab4f8"><circle cx="12" cy="12" r="8"/></svg>';
+    } else if (resolvedUrl === 'chrome://bookmarks' || resolvedUrl === 'bookmarks') {
+      resolvedUrl = 'bookmarks.html';
+      displayUrl = 'chrome://bookmarks';
+      tab.title = 'Bookmarks';
+      tab.favicon = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23fbbc05"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+    } else if (resolvedUrl === 'chrome://downloads' || resolvedUrl === 'downloads') {
+      resolvedUrl = 'downloads.html';
+      displayUrl = 'chrome://downloads';
+      tab.title = 'Downloads';
+      tab.favicon = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238ab4f8"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>';
     } else if (resolvedUrl === 'demo-lmarena') {
       resolvedUrl = 'lmarena-demo.html';
       displayUrl = 'chrome://lmarena-lag-fixer';
@@ -542,6 +557,14 @@
     DOM.chromeMenu.classList.remove('show');
     DOM.modalClearData.classList.add('show');
   });
+
+  const bmMenu = document.getElementById('menu-bookmarks');
+  if (bmMenu) {
+    bmMenu.addEventListener('click', () => {
+      navigateTo(state.activeTabId, 'chrome://bookmarks');
+      DOM.chromeMenu.classList.remove('show');
+    });
+  }
 
   document.getElementById('menu-anti-lag-demo').addEventListener('click', () => {
     navigateTo(state.activeTabId, 'demo-lmarena');
