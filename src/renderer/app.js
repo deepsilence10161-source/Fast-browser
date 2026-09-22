@@ -644,6 +644,55 @@
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  // Security Padlock Click -> Show Page Info Popup
+  if (DOM.securityIcon) {
+    DOM.securityIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const popup = document.getElementById('popup-page-info');
+      if (popup) popup.classList.toggle('show');
+    });
+  }
+
+  // Find In Page (Ctrl+F)
+  const findBar = document.getElementById('find-bar');
+  const findInput = document.getElementById('find-input');
+  const findClose = document.getElementById('find-close');
+
+  const menuFind = document.getElementById('menu-find-in-page');
+  if (menuFind) {
+    menuFind.addEventListener('click', () => {
+      DOM.chromeMenu.classList.remove('show');
+      if (findBar) {
+        findBar.classList.add('show');
+        findInput.focus();
+      }
+    });
+  }
+
+  if (findClose) {
+    findClose.addEventListener('click', () => {
+      if (findBar) findBar.classList.remove('show');
+    });
+  }
+
+  // Print Page (Ctrl+P)
+  const menuPrint = document.getElementById('menu-print');
+  if (menuPrint) {
+    menuPrint.addEventListener('click', () => {
+      DOM.chromeMenu.classList.remove('show');
+      window.print();
+    });
+  }
+
+  // Settings
+  const menuSettings = document.getElementById('menu-settings');
+  if (menuSettings) {
+    menuSettings.addEventListener('click', () => {
+      DOM.chromeMenu.classList.remove('show');
+      navigateTo(state.activeTabId, 'chrome://settings');
+    });
+  }
+
   // Initialize First Tab
   createTab('newtab', true);
   if (DOM.newTabBtn) {

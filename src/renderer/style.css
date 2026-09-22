@@ -773,6 +773,45 @@ body {
 .btn-primary { background-color: var(--primary-btn); color: #ffffff; }
 .btn-danger { background-color: #d93025 !important; }
 
+/* FIND IN PAGE BAR (Chrome Ctrl+F) */
+.find-in-page-bar {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  box-shadow: var(--shadow-popup);
+  padding: 6px 12px;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  z-index: 90;
+}
+.find-in-page-bar.show { display: flex; }
+#find-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--tab-text);
+  font-size: 13px;
+  width: 140px;
+}
+.find-count {
+  font-size: 11px;
+  color: var(--tab-inactive-text);
+}
+.find-btn {
+  background: transparent;
+  border: none;
+  color: var(--icon-color);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.find-btn:hover { background: var(--icon-hover-bg); }
+
 /* POPUP */
 .chrome-popup {
   position: absolute;

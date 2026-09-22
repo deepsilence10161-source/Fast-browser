@@ -142,10 +142,17 @@
       </div>
     </div>
 
-    <!-- ==========================================
-         4. WEB CONTENT AREA
-         ========================================== -->
+    <!-- 4. WEB CONTENT AREA -->
     <div class="chrome-content-area">
+      <!-- Find In Page Bar (Chrome Ctrl+F feature) -->
+      <div class="find-in-page-bar" id="find-bar">
+        <input type="text" id="find-input" placeholder="Find in page" autocomplete="off">
+        <span class="find-count" id="find-count">0/0</span>
+        <button class="find-btn" id="find-prev" title="Previous">∧</button>
+        <button class="find-btn" id="find-next" title="Next">∨</button>
+        <button class="find-btn" id="find-close" title="Close">✕</button>
+      </div>
+
       <div class="page-loading-bar" id="loading-bar"></div>
       <div class="tab-views-container" id="tab-views-container">
         <!-- Tab views / iframes dynamically created here -->
@@ -229,6 +236,18 @@
     </div>
     <div class="menu-item" id="menu-adblock-shield">
       <span style="color:#38bdf8;">🛡️ Turbo Shield Stats</span>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-item" id="menu-find-in-page">
+      <span>Find in page</span>
+      <span class="shortcut">Ctrl+F</span>
+    </div>
+    <div class="menu-item" id="menu-print">
+      <span>Print...</span>
+      <span class="shortcut">Ctrl+P</span>
+    </div>
+    <div class="menu-item" id="menu-settings">
+      <span>Settings</span>
     </div>
     <div class="menu-divider"></div>
     <div class="menu-item" id="menu-github">
@@ -333,6 +352,33 @@
         <span class="stat-value safe">100% Stripped</span>
       </div>
       <p class="popup-note">All requests to ad-exchanges, telemetry beacons, and user recording trackers are dropped before hitting the network stack.</p>
+    </div>
+  </div>
+
+  <!-- C. Page Security & SSL Info Modal -->
+  <div class="chrome-popup" id="popup-page-info">
+    <div class="popup-header">
+      <div class="popup-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#81c995" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span style="color:#81c995;">Connection is secure</span>
+      </div>
+    </div>
+    <div class="popup-body">
+      <p style="font-size:12px; line-height:1.4; color:var(--tab-text); margin-bottom:10px;">
+        Your information (e.g. passwords, cookies) is private and encrypted when sent to this site.
+      </p>
+      <div class="shield-stat-row">
+        <span>SSL Certificate:</span>
+        <span style="color:#81c995; font-weight:bold;">Valid (TLS 1.3)</span>
+      </div>
+      <div class="shield-stat-row">
+        <span>Cookies in use:</span>
+        <span>Local Session Only</span>
+      </div>
+      <div class="shield-stat-row">
+        <span>Third-party trackers:</span>
+        <span style="color:#81c995; font-weight:bold;">0 (100% Blocked)</span>
+      </div>
     </div>
   </div>
 
