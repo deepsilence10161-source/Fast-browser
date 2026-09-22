@@ -1,5 +1,117 @@
 [
   {
+    "id": "hist-1790083365490-5naer6",
+    "title": "github.com",
+    "url": "https://github.com/trending",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=github.com",
+    "timestamp": 1790083365490
+  },
+  {
+    "id": "hist-1790083364465-yi3m2z",
+    "title": "html.duckduckgo.com",
+    "url": "https://html.duckduckgo.com/html/?q=lightspeed%20browser",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=html.duckduckgo.com",
+    "timestamp": 1790083364465
+  },
+  {
+    "id": "hist-1790083363425-v0uut2",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/Albert_Einstein",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083363425
+  },
+  {
+    "id": "hist-1790083363196-fukow1",
+    "title": "news.ycombinator.com",
+    "url": "https://news.ycombinator.com/",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=news.ycombinator.com",
+    "timestamp": 1790083363196
+  },
+  {
+    "id": "hist-1790083316911-yx6jny",
+    "title": "html.duckduckgo.com",
+    "url": "https://html.duckduckgo.com/html/?q=formula%201",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=html.duckduckgo.com",
+    "timestamp": 1790083316911
+  },
+  {
+    "id": "hist-1790083309758-uph30s",
+    "title": "news.ycombinator.com",
+    "url": "https://news.ycombinator.com/",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=news.ycombinator.com",
+    "timestamp": 1790083309758
+  },
+  {
+    "id": "hist-1790083309576-63vn3q",
+    "title": "html.duckduckgo.com",
+    "url": "https://html.duckduckgo.com/html/?q=fast%20browser",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=html.duckduckgo.com",
+    "timestamp": 1790083309576
+  },
+  {
+    "id": "hist-1790083308523-eg8mid",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083308523
+  },
+  {
+    "id": "hist-1790083307879-sxvqr6",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/India",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083307879
+  },
+  {
+    "id": "hist-1790083241926-bc48k7",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083241928
+  },
+  {
+    "id": "hist-1790083170240-sbwf6n",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083170261
+  },
+  {
+    "id": "hist-1790083164256-m3tcuh",
+    "title": "duckduckgo.com",
+    "url": "https://duckduckgo.com/?q=india",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=duckduckgo.com",
+    "timestamp": 1790083164256
+  },
+  {
+    "id": "hist-1790083116079-ibje4z",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/India",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083116079
+  },
+  {
+    "id": "hist-1790083021720-yxvbwz",
+    "title": "www.google.com",
+    "url": "https://www.google.com/search?q=speedtest",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=www.google.com",
+    "timestamp": 1790083040482
+  },
+  {
+    "id": "hist-1790083017371-5e1gb4",
+    "title": "httpbin.org",
+    "url": "https://httpbin.org/get",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=httpbin.org",
+    "timestamp": 1790083017371
+  },
+  {
+    "id": "hist-1790083016077-lyh6yn",
+    "title": "en.wikipedia.org",
+    "url": "https://en.wikipedia.org/wiki/India",
+    "favicon": "https://www.google.com/s2/favicons?sz=64&domain_url=en.wikipedia.org",
+    "timestamp": 1790083016077
+  },
+  {
     "id": "hist-1790054586389-w7oxqr",
     "title": "en.wikipedia.org",
     "url": "https://en.wikipedia.org/wiki/Special:Random",
